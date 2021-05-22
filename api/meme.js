@@ -16,7 +16,7 @@ async function geraMeme(...args) {
     method: 'POST',
     url: token.urlMeme,
     params: {
-      template_id: templateIds[idMeme],
+      template_id: templateIds[idMeme - 1],
       username: token.username,
       password: token.password,
       font: 'impact',
