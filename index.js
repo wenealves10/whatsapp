@@ -7,6 +7,7 @@ const { printSite, geraPeople } = require('./puppeteer/pupeeter');
 const { geraMeme } = require('./api/meme');
 const { covertURL } = require('./util/covertURL');
 const { deleteFile } = require('./util/deleteFile');
+const { getDataCovidToStateAndCity } = require('./api/notice');
 
 const SESSION_FILE_PATH = './tokens/session1.json';
 
@@ -47,7 +48,7 @@ client.on('message', async (message) => {
   if (message.body === '!ping') {
     await message.reply('pong');
   } else if (message.body === '!menu') {
-    message.reply('Lista de Comandos\n*Verificar ping:* !ping\n*Criar Sticker:* !sticker\n*Gera Código QRcode:* !geraCode Texto\n*Tira Print de Site:* !print URL\n*Gerar Pessoas Aleatórias:* !geraPessoa');
+    message.reply('Lista de Comandos\n\n*Verificar ping:* !ping\n\n*Criar Sticker:* !sticker\n\n*Gera Código QRcode:* !geraCode Texto\n\n*Tira Print de Site:* !print URL\n\n*Gerar Pessoas Aleatórias:* !geraPessoa\n\n*Gera memes:* !geraMeme ID_MEME; TEXT1; TEXT2; TEXT3; etc;\n\n*Covid-19 no Brasil:* !covid; SIGLA DO ESTADO; SIM OU NÃO; PESQUISA CIDADE;');
   } else if (message.body === '!sticker' && message.hasMedia) {
     const attachmentData = await message.downloadMedia();
     await message.reply(attachmentData, message.from, { sendMediaAsSticker: true });
@@ -85,6 +86,17 @@ client.on('message', async (message) => {
       const url = await geraMeme(...texts);
       const meme = await covertURL(url);
       await message.reply(meme);
+    } catch (error) {
+      await message.reply(error.message);
+    }
+  } else if (message.body.startsWith('!covid;')) {
+    const data = message.body.split(/;/gi);
+    await message.reply('*Aguarde um pouco...*');
+    try {
+      const result = await getDataCovidToStateAndCity(
+        data[1], data[2], data[3],
+      );
+      await message.reply(result);
     } catch (error) {
       await message.reply(error.message);
     }
