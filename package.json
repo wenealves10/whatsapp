@@ -14,8 +14,6 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
-    "dayjs": "^1.10.4",
-    "node-fetch": "^2.6.1",
     "puppeteer": "^9.1.1",
     "qrcode": "^1.4.4",
     "whatsapp-web.js": "^1.12.6"
