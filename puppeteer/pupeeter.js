@@ -47,10 +47,12 @@ async function downloadMusic(search) {
   await page.waitForSelector('#s_input');
   await page.type('#s_input', search);
   await page.click('button.btn-red');
-  await page.waitForSelector('ul.listvideo > li:first-child > a');
-  const linkMusic = await page.$('ul.listvideo > li:first-child');
-  const url = await linkMusic.$eval('a', (node) => node.href);
-  await page.goto(url);
+  if (!String(search).trim().startsWith('http')) {
+    await page.waitForSelector('ul.listvideo > li:first-child > a');
+    const linkMusic = await page.$('ul.listvideo > li:first-child');
+    const url = await linkMusic.$eval('a', (node) => node.href);
+    await page.goto(url);
+  }
   await page.waitForSelector('span.hidden');
   const thumbnail = await page.$('div.thumbnail');
   const srcImage = await thumbnail.$eval('img', (node) => node.src);

@@ -42,6 +42,10 @@ const menu = `\t\t\t\t\t  *🔔_Lista de comandos_!*
 
 ➡️ !noticiabr
 
+🕸️ *Baixa musica da internet*
+
+➡️ ?? nome da musica ou link da musica
+
 ---------------------------------------------------------------
 
 💰 WENEDEV
