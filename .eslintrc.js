@@ -24,5 +24,6 @@ module.exports = {
     'consistent-return': 'off',
     'global-require': 'warn',
     'import/no-dynamic-require': 'warn',
+    'no-undef': 'warn',
   },
 };

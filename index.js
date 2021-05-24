@@ -3,13 +3,15 @@ const fs = require('fs');
 const { Client, MessageMedia } = require('whatsapp-web.js');
 
 const QrCode = require('qrcode');
-const { printSite, geraPeople } = require('./puppeteer/pupeeter');
+const { printSite, geraPeople, downloadMusic } = require('./puppeteer/pupeeter');
 const { geraMeme } = require('./api/meme');
 const { covertURL } = require('./util/covertURL');
-const { deleteFile } = require('./util/deleteFile');
+const { deleteFile, deleteMusic } = require('./util/deleteFile');
 const { getDataCovidToStateAndCity } = require('./api/notice');
+const { getNoticesBrazil } = require('./api/noticeBrazil');
+const { menu } = require('./util/menu');
 
-const SESSION_FILE_PATH = './tokens/session1.json';
+const SESSION_FILE_PATH = './tokens/session.json';
 
 let sessionCfg;
 
@@ -48,7 +50,7 @@ client.on('message', async (message) => {
   if (message.body === '!ping') {
     await message.reply('pong');
   } else if (message.body === '!menu') {
-    message.reply('Lista de Comandos\n\n*Verificar ping:* !ping\n\n*Criar Sticker:* !sticker\n\n*Gera Código QRcode:* !geraCode Texto\n\n*Tira Print de Site:* !print URL\n\n*Gerar Pessoas Aleatórias:* !geraPessoa\n\n*Gera memes:* !geraMeme ID_MEME; TEXT1; TEXT2; TEXT3; etc;\n\n*Covid-19 no Brasil:* !covid; SIGLA DO ESTADO; SIM OU NÃO; PESQUISA CIDADE;');
+    message.reply(menu);
   } else if (message.body === '!sticker' && message.hasMedia) {
     const attachmentData = await message.downloadMedia();
     await message.reply(attachmentData, message.from, { sendMediaAsSticker: true });
@@ -75,7 +77,7 @@ client.on('message', async (message) => {
     await message.reply('*Aguarde um pouco....*');
     try {
       const person = await geraPeople();
-      await message.reply(`*Nome:* ${person.nome}\n*Idade:* ${person.idade}\n*CPF:* ${person.cpf}\n*RG:* ${person.rg}\n*Data de Nascimento:* ${person.data_nasc}\n*Sexo:* ${person.sexo}\n*Signo:* ${person.signo}\n*Mãe:* ${person.mae}\n*Pai:* ${person.pai}\n*E-mail:* ${person.email}\n*Senha:* ${person.senha}\n*CEP:* ${person.cep}\n*Endereço:* ${person.endereco}\n*N° da casa:* ${person.numero}\n*Bairro:* ${person.bairro}\n*Cidade:* ${person.cidade}\n*Estado:* ${person.estado}\n*Telefone Fixo:* ${person.telefone_fixo}\n*Celular:* ${person.celular}\n*Altura:* ${person.altura}M\n*Peso:* ${person.peso}KG\n*Tipo Sanguíne:* ${person.tipo_sanguineo}\n*Cor Favorita:* ${person.cor}`);
+      await message.reply(person);
     } catch (error) {
       await message.reply(error.message);
     }
@@ -97,6 +99,26 @@ client.on('message', async (message) => {
         data[1], data[2], data[3],
       );
       await message.reply(result);
+    } catch (error) {
+      await message.reply(error.message);
+    }
+  } else if (message.body.toLowerCase() === '!noticiabr') {
+    await message.reply('*Aguarde um pouco....*');
+    try {
+      const notices = await getNoticesBrazil();
+      await message.reply(notices);
+    } catch (error) {
+      await message.reply(error.message);
+    }
+  } else if (message.body.startsWith('??')) {
+    const search = message.body.match(/[^??][\w\W]+/gi);
+    await message.reply('*Aguarde... um pouco enquanto baixo a musica🎶🎵*');
+    try {
+      const music = await downloadMusic(search);
+      await message.reply(music.imageThumbnail, message.from, { caption: music.titleMusic });
+      const media = MessageMedia.fromFilePath('./music/music.mp3');
+      await message.reply(media);
+      await deleteMusic('music.mp3');
     } catch (error) {
       await message.reply(error.message);
     }
