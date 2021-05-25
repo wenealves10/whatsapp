@@ -4,9 +4,9 @@ const { templateIds } = require('./template');
 
 async function geraMeme(...args) {
   const commandArray = [...args];
-  const idMeme = parseInt(commandArray[0].match(/\d+/), 10);
+  const idMeme = parseInt(commandArray[0], 10);
 
-  if (!idMeme) throw new Error('*Dados estão errados!*');
+  if (!idMeme) throw new Error('*Dados estão errados!\n*Só números entre 1 e 100*\n*Textos têm que estar separados por /*');
   if (idMeme < 1 || idMeme > 100) throw new Error('*Só números entre 1 e 100*');
 
   const textArray = commandArray.filter((value, index) => value !== '' && value && index > 0);
