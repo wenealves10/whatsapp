@@ -125,7 +125,7 @@ client.on('message', async (message) => {
       await message.reply(error.message);
     }
   } else if (message.body.startsWith('!video')) {
-    const search = message.body.match(/[^video][\w\W]+/gi);
+    const search = message.body.match(/[^!video][\w\W]+/gi);
     await message.reply('*Aguarde... um pouco enquanto baixo a vídeo🎞🎞*');
     try {
       const { titleMusic } = await downloadVideo(search);
