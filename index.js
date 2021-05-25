@@ -3,10 +3,12 @@ const fs = require('fs');
 const { Client, MessageMedia } = require('whatsapp-web.js');
 
 const QrCode = require('qrcode');
-const { printSite, geraPeople, downloadMusic } = require('./puppeteer/pupeeter');
+const {
+  printSite, geraPeople, downloadMusic, downloadVideo,
+} = require('./puppeteer/pupeeter');
 const { geraMeme } = require('./api/meme');
 const { covertURL } = require('./util/covertURL');
-const { deleteFile, deleteMusic } = require('./util/deleteFile');
+const { deleteFile, deleteMusic, deleteVideo } = require('./util/deleteFile');
 const { getDataCovidToStateAndCity } = require('./api/notice');
 const { getNoticesBrazil } = require('./api/noticeBrazil');
 const { menu } = require('./util/menu');
@@ -19,7 +21,7 @@ if (fs.existsSync(SESSION_FILE_PATH)) {
   sessionCfg = require(SESSION_FILE_PATH);
 }
 
-const client = new Client({ puppeteer: { headless: true }, session: sessionCfg, ffmpegPath: 'ffmpeg' });
+const client = new Client({ puppeteer: { headless: true, executablePath: '/usr/bin/google-chrome-stable' }, session: sessionCfg, ffmpegPath: 'ffmpeg' });
 
 client.initialize();
 
@@ -110,8 +112,8 @@ client.on('message', async (message) => {
     } catch (error) {
       await message.reply(error.message);
     }
-  } else if (message.body.startsWith('??')) {
-    const search = message.body.match(/[^??][\w\W]+/gi);
+  } else if (message.body.startsWith('!music')) {
+    const search = message.body.match(/[^music][\w\W]+/gi);
     await message.reply('*Aguarde... um pouco enquanto baixo a musica🎶🎵*');
     try {
       const music = await downloadMusic(search);
@@ -119,6 +121,17 @@ client.on('message', async (message) => {
       const media = MessageMedia.fromFilePath('./music/music.mp3');
       await message.reply(media);
       await deleteMusic('music.mp3');
+    } catch (error) {
+      await message.reply(error.message);
+    }
+  } else if (message.body.startsWith('!video')) {
+    const search = message.body.match(/[^video][\w\W]+/gi);
+    await message.reply('*Aguarde... um pouco enquanto baixo a vídeo🎞🎞*');
+    try {
+      const { titleMusic } = await downloadVideo(search);
+      const media = MessageMedia.fromFilePath('./video/video.mp4');
+      await deleteVideo('video.mp4');
+      await message.reply(media, message.from, { caption: titleMusic });
     } catch (error) {
       await message.reply(error.message);
     }
