@@ -44,7 +44,7 @@ _obs_ observe que esse _sim_ ou _não_ é noticias de ultíma hora!;
 
 ➡️ !noticiabr
 
----
+-----
 
 💰 WENEDEV
 
