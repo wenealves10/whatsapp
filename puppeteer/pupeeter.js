@@ -82,7 +82,7 @@ async function downloadVideo(search) {
   const page = await browser.newPage();
   await page.goto(linkDownloadVideo);
   await page.waitForSelector('#s_input');
-  await page.type('#s_input', search);
+  await page.type('#s_input', String(search).trim());
   await page.click('button.btn-red');
 
   if (!String(search).trim().startsWith('http')) {
@@ -101,7 +101,7 @@ async function downloadVideo(search) {
   const title = await page.$('div.clearfix');
   const titleMusic = await title.$eval('h3', (node) => node.innerText);
   const duration = String(await title.$eval('p.mag0', (node) => node.innerText)).replace(/:/gi, '');
-  if (parseInt(duration, 10) > 700) throw new Error('_Desculpe video acima de 7 minutos!!_');
+  if (parseInt(duration, 10) > 1000) throw new Error('_Desculpe video acima de 7 minutos!!_');
 
   const buttonDownload = await page.$('div.flex');
   const urlDownload = await buttonDownload.$eval('a#asuccess', (node) => node.href);
@@ -116,7 +116,7 @@ async function downloadVideo(search) {
 }
 
 // (async () => {
-//   const dataM = await downloadVideo('https://www.youtube.com/watch?v=Zj9StZi-ssU');
+//   const dataM = await downloadVideo('https://www.youtube.com/watch?v=Vfd7H69OnM0');
 //   console.log(dataM);
 // })();
 
