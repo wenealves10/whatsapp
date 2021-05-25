@@ -58,7 +58,7 @@ client.on('message', async (message) => {
     await message.reply(attachmentData, message.from, { sendMediaAsSticker: true });
   } else if (message.body.startsWith('!geracode')) {
     const textToQr = message.body.match(/[^!geracode][\w\W]+/gi);
-    QrCode.toFile('./images/qr.png', ...textToQr, { errorCorrectionLevel: 'high' }, async (err) => {
+    QrCode.toFile('./images/qr.png', textToQr, { errorCorrectionLevel: 'high' }, async (err) => {
       if (err) throw err;
       const media = MessageMedia.fromFilePath('./images/qr.png');
       await message.reply(media);
