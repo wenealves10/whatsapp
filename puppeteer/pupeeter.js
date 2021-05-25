@@ -93,7 +93,7 @@ async function downloadVideo(search) {
   }
   await page.waitForSelector('span.hidden');
   await page.evaluate(() => {
-    document.querySelector('select option:nth-child(3)').selected = true;
+    document.querySelector('select option:nth-child(4)').selected = true;
   });
   await page.click('button#btn-action');
 
