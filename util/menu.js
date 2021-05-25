@@ -6,7 +6,7 @@ const menu = `\t\t\t\t\t  *🔔_Lista de comandos_!*
 
 🕸️ *Fazer figurinhas e gif sticker*
 
-⚠️ manda foto ou video curto com legenda ⚠️
+⚠️ *manda foto, gif ou video de no máximo 10 segundos com legenda !sticker* ⚠️
 
 ➡️ !sticker
 
@@ -26,13 +26,13 @@ const menu = `\t\t\t\t\t  *🔔_Lista de comandos_!*
 
 ⚠️ Digite o comando !meme id_meme / text / text / etc..⚠️
 
-*obs* quando colocar os textos lembre adicionar / para separa os textos;
+*obs* quando for colocar os textos lembre-se de adicionar / para separar;
 
 ➡️ !meme 2 / Paga Netflix / Pedir a senha ao meu amigo
 
 🕸️ *Notícias da Covid-19 no Brasil*
 
-⚠️ Digite o comando !covid  Estado / Sim ou Não / Pesquisa por cidade⚠️
+⚠️*Digite o comando !covid  Estado / Sim ou Não / Pesquisa por cidade*⚠️
 
 *obs* observe que esse *sim* ou *não* é noticias de ultíma hora!;
 
