@@ -42,13 +42,21 @@ const menu = `\t\t\t\t\t  *🔔_Lista de comandos_!*
 
 ➡️ !noticiabr
 
-🕸️ *Baixa musica da internet*
+🕸️ *Baixa Musica da Youtube*
 
-➡️ ?? nome da musica ou link da musica
+*⚠️Tamanho limite é de 10 minutos⚠️*
+
+➡️ !music nome da musica ou link da musica
+
+🕸️ *Baixa Vídeo da Youtube*
+
+*⚠️Tamanho limite é de 7 minutos⚠️*
+
+➡️ !video nome da musica ou link da musica
 
 ---------------------------------------------------------------
 
-💰 WENEDEV
+💰 WENE ALVES DE OLIVEIRA
 
 DESENVOLVIMENTO DE SITES & BOTS
 
