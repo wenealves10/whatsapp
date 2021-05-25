@@ -12,7 +12,7 @@ const menu = `\t\t\t\t\t  *🔔_Lista de comandos_!*
 
 🕸️ *Gerar Código QRcode*
 
-➡️ !geraCode Texto
+➡️ !geracode Texto
 
 🕸️ *Tirar print de sites*
 
@@ -20,23 +20,23 @@ const menu = `\t\t\t\t\t  *🔔_Lista de comandos_!*
 
 🕸️ *Gerar pessoa fake*
 
-➡️ !geraPessoa
+➡️ !gerafake
 
 🕸️ *Gerar meme*
 
-⚠️ Digite o comando !geraMeme id_meme; text; text; etc..; ⚠️
+⚠️ Digite o comando !meme id_meme / text / text / etc..⚠️
 
-*obs* quando colocar os textos lembre adicionar ponto-e-virgula; para separa os textos;
+*obs* quando colocar os textos lembre adicionar / para separa os textos;
 
-➡️ !geraMeme 2; Paga Netflix; Pedir a senha ao meu amigo;
+➡️ !meme 2 / Paga Netflix / Pedir a senha ao meu amigo
 
 🕸️ *Notícias da Covid-19 no Brasil*
 
-⚠️ Digite o comando !covid; estado; sim ou não; pesquisa cidade;⚠️
+⚠️ Digite o comando !covid  Estado / Sim ou Não / Pesquisa por cidade⚠️
 
 *obs* observe que esse *sim* ou *não* é noticias de ultíma hora!;
 
-➡️ !covid; ma; sim; caxias;
+➡️ !covid ma / sim / caxias
 
 🕸️ *Principais Notícias do Brasil Hoje*
 
