@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 
-async function getDownload(url) {
-  const pathA = path.resolve(__dirname, '..', 'music', 'music.mp3');
+async function getDownload(url, type) {
+  const pathA = path.resolve(__dirname, '..', type, `${type}.${type === 'music' ? 'mp3' : 'mp4'}`);
   const writer = fs.createWriteStream(pathA);
 
   const response = await axios({

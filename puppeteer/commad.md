@@ -27,3 +27,5 @@ const urlMusic = document.querySelector('div.flex > a#asuccess').href;
 return { srcImg, title, urlMusic };
 });
 return musicData;
+
+const selectorSizeMP4 = document.querySelector('#formatSelect > optgroup[label=mp4]')
