@@ -56,9 +56,9 @@ client.on('message', async (message) => {
   } else if (message.body === '!sticker' && message.hasMedia) {
     const attachmentData = await message.downloadMedia();
     await message.reply(attachmentData, message.from, { sendMediaAsSticker: true });
-  } else if (message.body.startsWith('!geraCode ')) {
-    const textToQr = message.body.split(' ')[1];
-    QrCode.toFile('./images/qr.png', textToQr, { errorCorrectionLevel: 'high' }, async (err) => {
+  } else if (message.body.startsWith('!geracode')) {
+    const textToQr = message.body.match(/[^!geracode][\w\W]+/gi);
+    QrCode.toFile('./images/qr.png', ...textToQr, { errorCorrectionLevel: 'high' }, async (err) => {
       if (err) throw err;
       const media = MessageMedia.fromFilePath('./images/qr.png');
       await message.reply(media);
@@ -75,7 +75,7 @@ client.on('message', async (message) => {
     } catch (error) {
       await message.reply(error.message);
     }
-  } else if (message.body === '!geraPessoa') {
+  } else if (message.body === '!gerafake') {
     await message.reply('*Aguarde um pouco....*');
     try {
       const person = await geraPeople();
@@ -83,8 +83,9 @@ client.on('message', async (message) => {
     } catch (error) {
       await message.reply(error.message);
     }
-  } else if (message.body.startsWith('!geraMeme ')) {
-    const texts = message.body.split(/;/gi);
+  } else if (message.body.startsWith('!meme')) {
+    const data = message.body.match(/[^!meme][\w\W]+/gi);
+    const texts = data.join('').split(/\//gi);
     await message.reply('*Aguarde um pouco....*');
     try {
       const url = await geraMeme(...texts);
@@ -93,12 +94,13 @@ client.on('message', async (message) => {
     } catch (error) {
       await message.reply(error.message);
     }
-  } else if (message.body.startsWith('!covid;')) {
-    const data = message.body.split(/;/gi);
-    await message.reply('*Aguarde um pouco...*');
+  } else if (message.body.startsWith('!covid')) {
+    const data = message.body.match(/[^!covid][\w\W]+/gi);
+    const resultData = data.join('').split(/\//gi);
+    await message.reply('*Aguarde um pouco enquanto busco por informações...*');
     try {
       const result = await getDataCovidToStateAndCity(
-        data[1], data[2], data[3],
+        ...resultData,
       );
       await message.reply(result);
     } catch (error) {
