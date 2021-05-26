@@ -29,3 +29,11 @@ return { srcImg, title, urlMusic };
 return musicData;
 
 const selectorSizeMP4 = document.querySelector('#formatSelect > optgroup[label=mp4]')
+
+=======================================================================================================================
+
+const btnI9 = document.querySelector('#i9');
+const btnI10 = document.querySelector('#i10');
+const btnI10 = document.querySelector('#i11');
+const textAreaInput = document.querySelector('textarea.er8xn');
+const textOutPut = document.querySelector('span[jsname=W297wb]');
