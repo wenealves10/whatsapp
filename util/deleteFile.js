@@ -10,8 +10,4 @@ async function deleteMusic(file) {
   promisify(fs.unlink)(resolve(__dirname, '..', 'music', file));
 }
 
-async function deleteVideo(file) {
-  promisify(fs.unlink)(resolve(__dirname, '..', 'video', file));
-}
-
-module.exports = { deleteFile, deleteMusic, deleteVideo };
+module.exports = { deleteFile, deleteMusic };
