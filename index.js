@@ -8,11 +8,11 @@ const {
 } = require('./puppeteer/pupeeter');
 const { geraMeme } = require('./api/meme');
 const { covertURL } = require('./util/covertURL');
-const { deleteFile, deleteMusic, deleteVideo } = require('./util/deleteFile');
+const { deleteFile, deleteMusic } = require('./util/deleteFile');
 const { getDataCovidToStateAndCity } = require('./api/notice');
 const { getNoticesBrazil } = require('./api/noticeBrazil');
 const { menu } = require('./util/menu');
-const { myNumber } = require('./config/configuration.json');
+const { myNumber, myFriend } = require('./config/configuration.json');
 
 const SESSION_FILE_PATH = './tokens/session.json';
 
@@ -51,7 +51,13 @@ client.on('ready', () => {
 
 client.on('message', async (message) => {
   const chat = await message.getChat();
-  if (!chat.isGroup && message.from !== myNumber) return;
+  if (!chat.isGroup && !(message.from === myNumber || message.from === myFriend)) {
+    message.reply('*Vai tomar no c seu merda fdp🤬*');
+    const contact = await message.getContact();
+    console.log(contact);
+    contact.block();
+    return;
+  }
 
   if (message.body === '!ping') {
     await message.reply('pong');
@@ -134,10 +140,8 @@ client.on('message', async (message) => {
     const search = message.body.match(/[^!video][\w\W]+/gi);
     await message.reply('*Aguarde... um pouco enquanto baixo a vídeo🎞🎞*');
     try {
-      const { titleMusic } = await downloadVideo(search);
-      const media = MessageMedia.fromFilePath('./video/video.mp4');
-      await deleteVideo('video.mp4');
-      await message.reply(media, message.from, { caption: titleMusic });
+      const { titleMusic, video } = await downloadVideo(search);
+      await message.reply(video, message.from, { caption: titleMusic });
     } catch (error) {
       await message.reply(error.message);
     }
