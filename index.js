@@ -12,6 +12,7 @@ const { deleteFile, deleteMusic, deleteVideo } = require('./util/deleteFile');
 const { getDataCovidToStateAndCity } = require('./api/notice');
 const { getNoticesBrazil } = require('./api/noticeBrazil');
 const { menu } = require('./util/menu');
+const { myNumber } = require('./config/configuration.json');
 
 const SESSION_FILE_PATH = './tokens/session.json';
 
@@ -49,6 +50,9 @@ client.on('ready', () => {
 });
 
 client.on('message', async (message) => {
+  const chat = await message.getChat();
+  if (!chat.isGroup && message.from !== myNumber) return;
+
   if (message.body === '!ping') {
     await message.reply('pong');
   } else if (message.body === '!menu') {
