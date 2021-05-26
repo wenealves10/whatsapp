@@ -107,8 +107,8 @@ async function downloadVideo(search) {
     const buttonDownload = await page.$('div.flex');
     const urlDownload = await buttonDownload.$eval('a#asuccess', (node) => node.href);
     await browser.close();
-    await getDownload(urlDownload, 'video');
-    return { titleMusic };
+    const video = await getDownload(urlDownload, 'video');
+    return { titleMusic, video };
   } catch (error) {
     throw new Error('_Desculpe não consegui encontra a musica!!_');
   }
