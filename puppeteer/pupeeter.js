@@ -41,34 +41,34 @@ async function geraPeople() {
 }
 
 async function downloadMusic(search) {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.goto(linkDownloadMusic);
-  await page.waitForSelector('#s_input');
-  await page.type('#s_input', search);
-  await page.click('button.btn-red');
-
-  if (!String(search).trim().startsWith('http')) {
-    await page.waitForSelector('ul.listvideo > li:first-child > a');
-    const linkMusic = await page.$('ul.listvideo > li:first-child');
-    const url = await linkMusic.$eval('a', (node) => node.href);
-    await page.goto(url);
-  }
-
-  await page.waitForSelector('span.hidden');
-  const thumbnail = await page.$('div.thumbnail');
-  const srcImage = await thumbnail.$eval('img', (node) => node.src);
-  const title = await page.$('div.clearfix');
-  const titleMusic = await title.$eval('h3', (node) => node.innerText);
-
-  const duration = String(await title.$eval('p.mag0', (node) => node.innerText)).replace(/:/gi, '');
-  if (parseInt(duration, 10) > 1000) throw new Error('_Desculpe musica acima de 10 minutos!!_');
-
-  const buttonDownload = await page.$('div.flex');
-  const urlDownload = await buttonDownload.$eval('a#asuccess', (node) => node.href);
-  await browser.close();
-
   try {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(linkDownloadMusic);
+    await page.waitForSelector('#s_input');
+    await page.type('#s_input', search);
+    await page.click('button.btn-red');
+
+    if (!String(search).trim().startsWith('http')) {
+      await page.waitForSelector('ul.listvideo > li:first-child > a');
+      const linkMusic = await page.$('ul.listvideo > li:first-child');
+      const url = await linkMusic.$eval('a', (node) => node.href);
+      await page.goto(url);
+    }
+
+    await page.waitForSelector('span.hidden');
+    const thumbnail = await page.$('div.thumbnail');
+    const srcImage = await thumbnail.$eval('img', (node) => node.src);
+    const title = await page.$('div.clearfix');
+    const titleMusic = await title.$eval('h3', (node) => node.innerText);
+
+    const duration = String(await title.$eval('p.mag0', (node) => node.innerText)).replace(/:/gi, '');
+    if (parseInt(duration, 10) > 1000) throw new Error('_Desculpe musica acima de 10 minutos!!_');
+
+    const buttonDownload = await page.$('div.flex');
+    const urlDownload = await buttonDownload.$eval('a#asuccess', (node) => node.href);
+    await browser.close();
+
     await getDownload(urlDownload, 'music');
     const imageThumbnail = await covertURL(srcImage);
     return { titleMusic, imageThumbnail };
@@ -78,36 +78,35 @@ async function downloadMusic(search) {
 }
 
 async function downloadVideo(search) {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.goto(linkDownloadVideo);
-  await page.waitForSelector('#s_input');
-  await page.type('#s_input', String(search).trim());
-  await page.click('button.btn-red');
-
-  if (!String(search).trim().startsWith('http')) {
-    await page.waitForSelector('ul.listvideo > li:first-child > a');
-    const linkMusic = await page.$('ul.listvideo > li:first-child');
-    const url = await linkMusic.$eval('a', (node) => node.href);
-    await page.goto(url);
-  }
-  await page.waitForSelector('span.hidden');
-  await page.evaluate(() => {
-    document.querySelector('select option:nth-child(4)').selected = true;
-  });
-  await page.click('button#btn-action');
-
-  await page.waitForSelector('span.hidden');
-  const title = await page.$('div.clearfix');
-  const titleMusic = await title.$eval('h3', (node) => node.innerText);
-  const duration = String(await title.$eval('p.mag0', (node) => node.innerText)).replace(/:/gi, '');
-  if (parseInt(duration, 10) > 1000) throw new Error('_Desculpe video acima de 7 minutos!!_');
-
-  const buttonDownload = await page.$('div.flex');
-  const urlDownload = await buttonDownload.$eval('a#asuccess', (node) => node.href);
-  await browser.close();
-
   try {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(linkDownloadVideo);
+    await page.waitForSelector('#s_input');
+    await page.type('#s_input', String(search).trim());
+    await page.click('button.btn-red');
+
+    if (!String(search).trim().startsWith('http')) {
+      await page.waitForSelector('ul.listvideo > li:first-child > a');
+      const linkMusic = await page.$('ul.listvideo > li:first-child');
+      const url = await linkMusic.$eval('a', (node) => node.href);
+      await page.goto(url);
+    }
+    await page.waitForSelector('span.hidden');
+    await page.evaluate(() => {
+      document.querySelector('select option:nth-child(4)').selected = true;
+    });
+    await page.click('button#btn-action');
+
+    await page.waitForSelector('span.hidden');
+    const title = await page.$('div.clearfix');
+    const titleMusic = await title.$eval('h3', (node) => node.innerText);
+    const duration = String(await title.$eval('p.mag0', (node) => node.innerText)).replace(/:/gi, '');
+    if (parseInt(duration, 10) > 1000) throw new Error('_Desculpe video acima de 7 minutos!!_');
+
+    const buttonDownload = await page.$('div.flex');
+    const urlDownload = await buttonDownload.$eval('a#asuccess', (node) => node.href);
+    await browser.close();
     await getDownload(urlDownload, 'video');
     return { titleMusic };
   } catch (error) {
