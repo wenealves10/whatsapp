@@ -60,7 +60,7 @@ const menu = `\t\t\t\t\t  *🔔_Lista de comandos_!*
 
 DESENVOLVIMENTO DE SITES & BOTS
 
-➡️ https://www.wenedev.site
+➡️ https://wenedev.site
 ➡️ https://devbot.software
 ➡️ https://github.com/wenealves10
 `;
