@@ -1,4 +1,4 @@
-#🔔Lista de comandos!
+#ista de comandos!
 
 ➡️ https://devbot.software
 
