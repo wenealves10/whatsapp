@@ -1,6 +1,6 @@
 _Lista de comandos_!
 
-➡️   https://devbot.software
+➡️ https://devbot.software
 
 🕸️ Mostrar o ping
 
