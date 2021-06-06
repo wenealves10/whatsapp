@@ -52,10 +52,9 @@ client.on('ready', () => {
 client.on('message', async (message) => {
   const chat = await message.getChat();
   if (!chat.isGroup && !(message.from === myNumber || message.from === myFriend)) {
-    message.reply('*Vai tomar no c seu merda fdp🤬*');
+    await message.reply('*Vai tomar no c seu merda fdp🤬*');
     const contact = await message.getContact();
-    console.log(contact);
-    contact.block();
+    await contact.block();
     return;
   }
 
