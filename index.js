@@ -50,13 +50,13 @@ client.on('ready', () => {
 });
 
 client.on('message', async (message) => {
-  const chat = await message.getChat();
-  if (!chat.isGroup && !(message.from === myNumber || message.from === myFriend)) {
-    await message.reply('*Vai tomar no c seu merda fdp🤬*');
-    const contact = await message.getContact();
-    await contact.block();
-    return;
-  }
+  // const chat = await message.getChat();
+  // if (!chat.isGroup && !(message.from === myNumber || message.from === myFriend)) {
+  //   await message.reply('*Vai tomar no c seu merda fdp🤬*');
+  //   const contact = await message.getContact();
+  //   await contact.block();
+  //   return;
+  // }
 
   if (message.body === '!ping') {
     await message.reply('pong');
