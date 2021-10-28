@@ -63,8 +63,10 @@ async function downloadMusic(search) {
     const titleMusic = await title.$eval('h3', (node) => node.innerText);
 
     const duration = String(await title.$eval('p.mag0', (node) => node.innerText)).replace(/:/gi, '');
-    if (parseInt(duration, 10) > 1000) throw new Error('_Desculpe musica acima de 10 minutos!!_');
+    if (parseInt(duration, 10) > 1000) throw new Error('_Desculpe musica acima de 10 minutos!!');
 
+    await page.click('button#btn-action');
+    await page.waitForSelector('a#asuccess', { visible: true });
     const buttonDownload = await page.$('div.flex');
     const urlDownload = await buttonDownload.$eval('a#asuccess', (node) => node.href);
     await browser.close();
@@ -97,6 +99,8 @@ async function downloadVideo(search) {
       document.querySelector('select option:nth-child(4)').selected = true;
     });
     await page.click('button#btn-action');
+
+    await page.waitForSelector('a#asuccess', { visible: true });
 
     await page.waitForSelector('span.hidden');
     const title = await page.$('div.clearfix');
